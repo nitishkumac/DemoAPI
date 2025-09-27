@@ -3,6 +3,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using NLog.Web;
 using NLog;
+using DemoAPI.Models;
+using Microsoft.EntityFrameworkCore;
 
 // NLog: Setup NLog for Dependency injection
 LogManager.Setup().LoadConfigurationFromAppSettings();
@@ -15,8 +17,13 @@ try
     builder.Logging.ClearProviders();
     builder.Host.UseNLog();
 
+
 // Add services to the container.
 
+
+// Register DbContext with SQL Server
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
