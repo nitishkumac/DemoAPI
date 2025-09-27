@@ -5,6 +5,7 @@ using NLog.Web;
 using NLog;
 using DemoAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using DemoAPI.Middleware;
 
 // NLog: Setup NLog for Dependency injection
 LogManager.Setup().LoadConfigurationFromAppSettings();
@@ -62,6 +63,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
+// Add custom middleware
+app.UseCustomLogging();
 
 app.UseHttpsRedirection();
 
