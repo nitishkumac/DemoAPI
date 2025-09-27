@@ -1,13 +1,12 @@
-
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using NLog.Web;
-
+using NLog;
 
 // NLog: Setup NLog for Dependency injection
-var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+LogManager.Setup().LoadConfigurationFromAppSettings();
+var logger = LogManager.GetCurrentClassLogger();
 try
 {
     var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +24,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // JWT Authentication configuration
-var jwtKey = "ThisIsASecretKeyForJwtToken123!"; // Move to config in production
+var jwtKey = "ThisIsASecretKeyForJwtToken123!!"; // Move to config in production
 var key = Encoding.ASCII.GetBytes(jwtKey);
 builder.Services.AddAuthentication(options =>
 {

@@ -13,11 +13,16 @@ namespace DemoAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
+            if (request == null || string.IsNullOrEmpty(request.Username) || string.IsNullOrEmpty(request.Password))
+            {
+                return BadRequest("Username and password are required.");
+            }
+
             // Simple user validation (replace with real validation)
             if (request.Username == "test" && request.Password == "password")
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes("ThisIsASecretKeyForJwtToken123!");
+                var key = Encoding.ASCII.GetBytes("ThisIsASecretKeyForJwtToken123!!");
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new[]
